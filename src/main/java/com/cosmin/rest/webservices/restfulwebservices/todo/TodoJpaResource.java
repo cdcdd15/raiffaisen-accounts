@@ -23,6 +23,19 @@ public class TodoJpaResource {
 	@Autowired
 	private TodoJpaRepository todoJpaRepository;
 
+	@Autowired
+	private AccountService serv;
+	
+	@GetMapping("/evict")
+	public ResponseEntity<Void> evict(){
+		this.serv.evictAllCacheValues();
+		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/acc")
+	public List<Account> getAllAcc(){
+		return this.serv.get();
+	}
 	
 	@GetMapping
 	public List<Account> getAllTodos(){
