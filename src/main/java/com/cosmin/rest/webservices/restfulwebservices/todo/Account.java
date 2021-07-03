@@ -12,24 +12,44 @@ public class Account {
 	@GeneratedValue
 	private Long id;
 	private String iban;
+	private String currency;
+	private Date targetDate;
+	private Integer balance;
 
 	
 //	private String username;
 //	private String description;
-//	private Date targetDate;
 //	private boolean isDone;
 	
 	public Account() {
 		
 	}
 
-	public Account(long id, String iban) {
+	public Account(long id, String iban, Date targetDate, Integer balance, String currency) {
 		super();
 		this.id = id;
 		this.iban = iban;
+		this.targetDate = targetDate;
+		this.balance = balance;
+		this.currency = currency;
 //		this.description = description;
-//		this.targetDate = targetDate;
 //		this.isDone = isDone;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	public Integer getBalance() {
+		return balance;
+	}
+
+	public void setBalance(Integer balance) {
+		this.balance = balance;
 	}
 
 	public Long getId() {
@@ -46,6 +66,14 @@ public class Account {
 
 	public void setIban(String iban) {
 		this.iban = iban;
+	}
+
+	public Date getTargetDate() {
+		return targetDate;
+	}
+
+	public void setTargetDate(Date targetDate) {
+		this.targetDate = targetDate;
 	}
 
 	

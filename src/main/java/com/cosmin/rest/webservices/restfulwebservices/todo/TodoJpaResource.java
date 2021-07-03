@@ -12,18 +12,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
+@RequestMapping("/accounts")
 public class TodoJpaResource {
 	
 	@Autowired
 	private TodoJpaRepository todoJpaRepository;
 
 	
-	@GetMapping("/jpa/users/{username}/todos")
-	public List<Account> getAllTodos(@PathVariable String username){
+	@GetMapping
+	public List<Account> getAllTodos(){
 		return todoJpaRepository.findAll();
 	}
 
@@ -41,7 +43,7 @@ public class TodoJpaResource {
 //		return ResponseEntity.noContent().build();
 //	}
 	
-	@DeleteMapping("/jpa/delete-all")
+	@DeleteMapping
 	public ResponseEntity<Void> deleteAll() {
 
 		todoJpaRepository.deleteAll();
@@ -62,11 +64,10 @@ public class TodoJpaResource {
 //		return new ResponseEntity<Account>(todoUpdated, HttpStatus.OK);
 //	}
 	
-	@PostMapping("/jpa/users/{username}/todos")
-	public ResponseEntity<Void> createTodo(
-			@PathVariable String username, @RequestBody Account todo){
+	@PostMapping
+	public ResponseEntity<Void> createTodo(@RequestBody Account todo){
 		
-		todo.setId(-1L);
+//		todo.setId(-1L);
 				
 		Account createdTodo = todoJpaRepository.save(todo);
 		
