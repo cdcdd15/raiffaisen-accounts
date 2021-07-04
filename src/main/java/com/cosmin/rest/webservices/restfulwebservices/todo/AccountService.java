@@ -63,4 +63,8 @@ public class AccountService {
 	public ResponseEntity<String> fallBck(Exception exception) {
 		return new ResponseEntity<String>("Response from circuit breaker fallback method.", HttpStatus.OK);
 	}
+	
+	public String hello() {
+        return "Hello from Service.";
+    }
 }

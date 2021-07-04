@@ -21,12 +21,12 @@ public class ServiceMockitoTest {
     @Mock
     private AccountRepository repository;
 
-    @InjectMocks // auto inject helloRepository
+    @InjectMocks
     private AccountService service = new AccountService();
 
-    @BeforeEach
-    void setMockOutput() {
-    }
+//    @BeforeEach
+//    void setMockOutput() {
+//    }
 
     @DisplayName("Test Mock")
     @Test
