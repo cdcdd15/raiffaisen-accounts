@@ -1,4 +1,4 @@
-package com.cosmin.rffsn.todo;
+package com.cosmin.rffsn.accounts;
 
 import java.util.Date;
 
@@ -14,7 +14,7 @@ public class Account {
 	private String iban;
 	private String currency;
 	private Date targetDate;
-	private Integer balance;
+	private Double balance;
 
 	
 //	private String username;
@@ -25,7 +25,7 @@ public class Account {
 		
 	}
 
-	public Account(long id, String iban, Date targetDate, Integer balance, String currency) {
+	public Account(long id, String iban, Date targetDate, Double balance, String currency) {
 		super();
 		this.id = id;
 		this.iban = iban;
@@ -44,11 +44,11 @@ public class Account {
 		this.currency = currency;
 	}
 
-	public Integer getBalance() {
+	public Double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(Integer balance) {
+	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
 

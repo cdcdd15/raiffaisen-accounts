@@ -1,12 +1,15 @@
-package com.cosmin.rffsn.todo;
+package com.cosmin.rffsn.accounts;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,18 +34,28 @@ public class AccountController {
 	}
 	
 	@GetMapping("/exc")
-	public ResponseEntity<String> exc(){
-		return this.serv.exchageRates();
+	public ResponseEntity<Map<String, String>> exc(){
+		Map<String, String> rates = this.serv.exchageRates();
+		return new ResponseEntity<Map<String, String>>(rates, HttpStatus.OK);
 	}
 	
-	@GetMapping("/acc")
-	public List<Account> getAllAcc(){
-		return this.serv.get();
-	}
+//	@GetMapping("/acc")
+//	public List<Account> getAllAcc(){
+//		return this.serv.get();
+//	}
 	
 	@GetMapping
 	public List<Account> getAllTodos(){
 		return todoJpaRepository.findAll();
+	}
+	
+	@GetMapping("/{iban}")
+	public ResponseEntity<Account> getByIban(@PathVariable String iban){
+		Account account = this.todoJpaRepository.findByIban(iban);
+		if(account == null)throw new AccountNotFoundException();
+//		return todoJpaRepository.findAll();
+		Double balanceInRon = account.getBalance();
+		return new ResponseEntity<Account>(account, HttpStatus.OK);
 	}
 
 //	@GetMapping("/jpa/users/{username}/todos/{id}")

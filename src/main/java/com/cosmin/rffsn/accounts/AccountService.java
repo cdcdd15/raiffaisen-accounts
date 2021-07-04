@@ -1,7 +1,9 @@
-package com.cosmin.rffsn.todo;
+package com.cosmin.rffsn.accounts;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.cosmin.rffsn.accounts.util.RatesUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,13 +29,15 @@ public class AccountService {
 
 	private static final String BREAKER_NAME = "accn-serv";
 	
-	private static final String CACHE_NAME = "addresses";
+//	private static final String CACHE_NAME = "addresses";
 
-	@Cacheable(CACHE_NAME)
-	public List<Account> get() {
-		System.out.println("inside service get() method.");
-		return repository.findAll();
-	}
+	private static final String CACHE_NAME_RATES = "rates";
+	
+//	@Cacheable(CACHE_NAME)
+//	public List<Account> get() {
+//		System.out.println("inside service get() method.");
+//		return repository.findAll();
+//	}
 	
 	public java.util.List<Account> findAll() {
 		return this.repository.findAll();
@@ -40,28 +45,41 @@ public class AccountService {
 
 	public void evictAllCacheValues() {
 		System.out.println("inside service evictAllCacheValues() method.");
-		cacheManager.getCache(CACHE_NAME).clear();
+		cacheManager.getCache(CACHE_NAME_RATES).clear();
 	}
 
 	@CircuitBreaker(name = BREAKER_NAME, fallbackMethod = "fallBck")
-	public ResponseEntity<String> exchageRates() {
+	@Cacheable(CACHE_NAME_RATES)	
+	public Map<String, String> exchageRates() {
+//	public ResponseEntity<String> exchageRates() {
 		RestTemplate restTemplate = new RestTemplate();
 		String fooResourceUrl = "http://api.exchangeratesapi.io/v1/latest?access_key=5f96ff228e05bda6d5ee91b330c231a6&format=1";
 		ResponseEntity<String> response = restTemplate.getForEntity(fooResourceUrl, String.class);
 		System.out.println("Status code=" + response.getStatusCode());
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode root;
-		try {
-			root = mapper.readTree(response.getBody());
-			System.out.println(root.get("rates").get("RON"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return response;
+		Map<String, String> rates = RatesUtil.fromHttpBodyToRateList(response);
+//		ObjectMapper mapper = new ObjectMapper();
+//		JsonNode root;
+//		String rates = null;;
+//		try {
+//			root = mapper.readTree(response.getBody());
+//			rates = root.get("rates").asText();
+//			System.out.println(root.get("rates").get("RON"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		return rates;
+//		return response;
 	}
 	
-	public ResponseEntity<String> fallBck(Exception exception) {
-		return new ResponseEntity<String>("Response from circuit breaker fallback method.", HttpStatus.OK);
+	private String rates(String rates) {
+		return rates;
+	}
+	
+	public Map<String, String> fallBck(Exception exception) {
+		exception.printStackTrace();
+		Map<String, String> map = new HashMap<>();
+		map.put("error", "Could not get exchange rates from endpoint. Response from circuit breaker fallback method.");
+		return map;
 	}
 	
 	public String hello() {

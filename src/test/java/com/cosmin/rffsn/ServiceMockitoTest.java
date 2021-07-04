@@ -9,9 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.cosmin.rffsn.todo.Account;
-import com.cosmin.rffsn.todo.AccountRepository;
-import com.cosmin.rffsn.todo.AccountService;
+import com.cosmin.rffsn.accounts.Account;
+import com.cosmin.rffsn.accounts.AccountRepository;
+import com.cosmin.rffsn.accounts.AccountService;
 
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;

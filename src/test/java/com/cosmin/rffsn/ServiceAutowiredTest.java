@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.cosmin.rffsn.todo.AccountService;
+import com.cosmin.rffsn.accounts.AccountService;
 
 @SpringBootTest
 public class ServiceAutowiredTest {

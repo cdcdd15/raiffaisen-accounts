@@ -1,4 +1,4 @@
-package com.cosmin.rffsn.todo;
+package com.cosmin.rffsn.accounts;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -12,6 +12,6 @@ public class CachingConfig {
 	
 	@Bean
 	public CacheManager cacheManager() {
-		return new ConcurrentMapCacheManager("addresses");
+		return new ConcurrentMapCacheManager("rates");
 	}
 }
