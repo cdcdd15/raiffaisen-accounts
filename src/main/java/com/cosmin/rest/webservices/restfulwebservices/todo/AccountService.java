@@ -33,6 +33,10 @@ public class AccountService {
 		System.out.println("inside service get() method.");
 		return repository.findAll();
 	}
+	
+	public java.util.List<Account> findAll() {
+		return this.repository.findAll();
+	}
 
 	public void evictAllCacheValues() {
 		System.out.println("inside service evictAllCacheValues() method.");
