@@ -18,10 +18,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/accounts")
-public class TodoJpaResource {
+public class AccountController {
 	
 	@Autowired
-	private TodoJpaRepository todoJpaRepository;
+	private AccountRepository todoJpaRepository;
 
 	@Autowired
 	private AccountService serv;
@@ -30,6 +30,11 @@ public class TodoJpaResource {
 	public ResponseEntity<Void> evict(){
 		this.serv.evictAllCacheValues();
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/exc")
+	public ResponseEntity<String> exc(){
+		return this.serv.exchageRates();
 	}
 	
 	@GetMapping("/acc")
