@@ -26,4 +26,6 @@ Package locally with mvn clean package does the following
 
 Start Docker containers locally
 - the docker-compose.yml located in project root starts 2 containers: MySQL (from official image) and the Spring Boot project container (from the image created with the mvn clean package on the current Spring Boot project)
-- the env.sh script located in scripts folder does the following: deletes all docker containers locally, creates the project image by running mvn clean package on the current Spring Boot project, starts the 2 containers mentioned previously
+- containers start inside --network=spring-mysql-net so they need this Docker network to be created locally
+docker network create spring-mysql-net
+- the env.sh script located in scripts folder does the following: deletes all docker containers locally, creates the project image by running mvn clean package on the current Spring Boot project, created the Docker network to be created locally, starts the 2 containers mentioned previously

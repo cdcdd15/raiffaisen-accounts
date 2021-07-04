@@ -1,0 +1,31 @@
+version: '3.7'
+networks:
+  spring-mysql-net:
+    external: true
+services:
+  mysql-node:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: todos
+      MYSQL_USER: cosmin
+      MYSQL_PASSWORD: pass
+    container_name: localmysql
+    ports:
+      - 3306:3306
+    restart: always
+    networks:
+      - spring-mysql-net
+
+  micro-1:
+    image: cosdin/raiffeisen-account-service:0.0.1-SNAPSHOT
+    container_name: client_node_sb
+    ports:
+      - 5000:5000
+    restart: always
+    environment:
+      RDS_HOSTNAME: localmysql
+    depends_on:
+      - mysql-node
+    networks:
+      - spring-mysql-net
