@@ -1,4 +1,4 @@
-package com.cosmin.rest.webservices.restfulwebservices;
+package com.cosmin.rffsn;
 
 import java.net.URL;
 

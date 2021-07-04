@@ -1,4 +1,4 @@
-package com.cosmin.rest.webservices.restfulwebservices.todo;
+package com.cosmin.rffsn.todo;
 
 import java.io.IOException;
 import java.util.List;

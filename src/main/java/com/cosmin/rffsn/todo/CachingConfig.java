@@ -1,4 +1,4 @@
-package com.cosmin.rest.webservices.restfulwebservices.todo;
+package com.cosmin.rffsn.todo;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;

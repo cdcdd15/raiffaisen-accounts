@@ -1,4 +1,4 @@
-package com.cosmin.rest.webservices.restfulwebservices;
+package com.cosmin.rffsn;
 
 import java.util.ArrayList;
 
@@ -8,12 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.cosmin.rffsn.todo.Account;
+import com.cosmin.rffsn.todo.AccountRepository;
+import com.cosmin.rffsn.todo.AccountService;
+
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import com.cosmin.rest.webservices.restfulwebservices.todo.Account;
-import com.cosmin.rest.webservices.restfulwebservices.todo.AccountRepository;
-import com.cosmin.rest.webservices.restfulwebservices.todo.AccountService;
 
 @SpringBootTest
 public class ServiceMockitoTest {

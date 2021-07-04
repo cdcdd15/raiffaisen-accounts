@@ -29,3 +29,6 @@ Start Docker containers locally
 - containers start inside --network=spring-mysql-net so they need this Docker network to be created locally
 docker network create spring-mysql-net
 - the env.sh script located in scripts folder does the following: deletes all docker containers locally, creates the project image by running mvn clean package on the current Spring Boot project, created the Docker network to be created locally, starts the 2 containers mentioned previously
+
+Applied circuit breaker library
+- @CircuitBreaker present in class AccountService.java

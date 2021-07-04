@@ -1,4 +1,4 @@
-package com.cosmin.rest.webservices.restfulwebservices;
+package com.cosmin.rffsn;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class RestfulWebServicesApplicationTests {
+public class ApplicationLoadsTest {
 
 	@Test
 	public void contextLoads() {

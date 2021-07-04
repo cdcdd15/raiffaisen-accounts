@@ -1,4 +1,4 @@
-package com.cosmin.rest.webservices.restfulwebservices;
+package com.cosmin.rffsn;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.cosmin.rest.webservices.restfulwebservices.todo.AccountService;
+import com.cosmin.rffsn.todo.AccountService;
 
 @SpringBootTest
 public class ServiceAutowiredTest {
