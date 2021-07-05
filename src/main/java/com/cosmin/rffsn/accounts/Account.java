@@ -2,6 +2,7 @@ package com.cosmin.rffsn.accounts;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ public class Account {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@Column(unique=true)
 	private String iban;
 	private String currency;
 	private Date targetDate;

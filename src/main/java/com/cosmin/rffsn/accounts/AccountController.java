@@ -20,41 +20,46 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
-	
+
 	@Autowired
-	private AccountRepository todoJpaRepository;
+	private AccountRepository repository;
 
 	@Autowired
 	private AccountService serv;
-	
+
 	@GetMapping("/evict")
-	public ResponseEntity<Void> evict(){
+	public ResponseEntity<Void> evict() {
 		this.serv.evictAllCacheValues();
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@GetMapping("/exc")
-	public ResponseEntity<Map<String, String>> exc(){
+	public ResponseEntity<Map<String, String>> exc() {
 		Map<String, String> rates = this.serv.exchageRates();
 		return new ResponseEntity<Map<String, String>>(rates, HttpStatus.OK);
 	}
-	
+
 //	@GetMapping("/acc")
 //	public List<Account> getAllAcc(){
 //		return this.serv.get();
 //	}
-	
+
 	@GetMapping
-	public List<Account> getAllTodos(){
-		return todoJpaRepository.findAll();
+	public List<Account> getAllTodos() {
+		return repository.findAll();
 	}
-	
+
 	@GetMapping("/{iban}")
-	public ResponseEntity<Account> getByIban(@PathVariable String iban){
-		Account account = this.todoJpaRepository.findByIban(iban);
-		if(account == null)throw new AccountNotFoundException();
-//		return todoJpaRepository.findAll();
+	public ResponseEntity<Account> getByIban(@PathVariable String iban) {
+		Account account = this.repository.findByIban(iban);
+		if (account == null)
+			throw new AccountNotFoundException();
 		Double balanceInRon = account.getBalance();
+		Map<String, String> rates = this.serv.exchageRates();
+		Double rate = Double.parseDouble(rates.get("RON"));
+		Double balanceInEur = balanceInRon / rate;
+		account.setBalance(balanceInEur);
+		account.setCurrency("EUR");
 		return new ResponseEntity<Account>(account, HttpStatus.OK);
 	}
 
@@ -71,45 +76,46 @@ public class AccountController {
 //
 //		return ResponseEntity.noContent().build();
 //	}
-	
+
 	@DeleteMapping
 	public ResponseEntity<Void> deleteAll() {
 
-		todoJpaRepository.deleteAll();
+		repository.deleteAll();
 
 		return ResponseEntity.noContent().build();
 	}
-	
 
 //	@PutMapping("/jpa/users/{username}/todos/{id}")
 //	public ResponseEntity<Account> updateTodo(
 //			@PathVariable String username,
 //			@PathVariable long id, @RequestBody Account todo){
-		
+
 //		todo.setUsername(username);
-		
+
 //		Account todoUpdated = todoJpaRepository.save(todo);
-		
+
 //		return new ResponseEntity<Account>(todoUpdated, HttpStatus.OK);
 //	}
-	
+
 	@PostMapping
-	public ResponseEntity<Void> createTodo(@RequestBody Account todo){
-		
-//		todo.setId(-1L);
-				
-		Account createdTodo = todoJpaRepository.save(todo);
-		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(createdTodo.getId()).toUri();
-		
-		return ResponseEntity.created(uri).build();
+	public ResponseEntity<String> createTodo(@RequestBody Account acc) {
+		Account account = this.repository.findByIban(acc.getIban());
+		if (account != null) {
+			return new ResponseEntity<String>(
+					"Record with this iban field already exists, change the iban and insert it again",
+					HttpStatus.CREATED);
+		}
+		account = repository.save(acc);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(account.getId())
+				.toUri();
+//		return ResponseEntity.created(uri).build();
+		return new ResponseEntity<String>("Record created, " + uri, HttpStatus.CREATED);
 	}
-	
+
 	@ResponseBody
-    @GetMapping("/hello")
-    public String hello() {
-        return this.serv.hello();
-    }
-		
+	@GetMapping("/hello")
+	public String hello() {
+		return this.serv.hello();
+	}
+
 }
