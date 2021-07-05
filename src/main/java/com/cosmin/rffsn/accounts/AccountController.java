@@ -39,11 +39,6 @@ public class AccountController {
 		return new ResponseEntity<Map<String, String>>(rates, HttpStatus.OK);
 	}
 
-//	@GetMapping("/acc")
-//	public List<Account> getAllAcc(){
-//		return this.serv.get();
-//	}
-
 	@GetMapping
 	public List<Account> getAllTodos() {
 		return repository.findAll();
@@ -63,20 +58,6 @@ public class AccountController {
 		return new ResponseEntity<Account>(account, HttpStatus.OK);
 	}
 
-//	@GetMapping("/jpa/users/{username}/todos/{id}")
-//	public Account getTodo(@PathVariable String username, @PathVariable long id){
-//		return todoJpaRepository.findById(id).get();
-//	}
-
-//	@DeleteMapping("/jpa/users/{username}/todos/{id}")
-//	public ResponseEntity<Void> deleteTodo(
-//			@PathVariable String username, @PathVariable long id) {
-//
-//		todoJpaRepository.deleteById(id);
-//
-//		return ResponseEntity.noContent().build();
-//	}
-
 	@DeleteMapping
 	public ResponseEntity<Void> deleteAll() {
 
@@ -84,18 +65,6 @@ public class AccountController {
 
 		return ResponseEntity.noContent().build();
 	}
-
-//	@PutMapping("/jpa/users/{username}/todos/{id}")
-//	public ResponseEntity<Account> updateTodo(
-//			@PathVariable String username,
-//			@PathVariable long id, @RequestBody Account todo){
-
-//		todo.setUsername(username);
-
-//		Account todoUpdated = todoJpaRepository.save(todo);
-
-//		return new ResponseEntity<Account>(todoUpdated, HttpStatus.OK);
-//	}
 
 	@PostMapping
 	public ResponseEntity<String> createTodo(@RequestBody Account acc) {
@@ -108,7 +77,6 @@ public class AccountController {
 		account = repository.save(acc);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(account.getId())
 				.toUri();
-//		return ResponseEntity.created(uri).build();
 		return new ResponseEntity<String>("Record created, " + uri, HttpStatus.CREATED);
 	}
 

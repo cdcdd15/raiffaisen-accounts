@@ -18,11 +18,6 @@ public class Account {
 	private Date targetDate;
 	private Double balance;
 
-	
-//	private String username;
-//	private String description;
-//	private boolean isDone;
-	
 	public Account() {
 		
 	}
@@ -34,8 +29,6 @@ public class Account {
 		this.targetDate = targetDate;
 		this.balance = balance;
 		this.currency = currency;
-//		this.description = description;
-//		this.isDone = isDone;
 	}
 
 	public String getCurrency() {
@@ -76,7 +69,5 @@ public class Account {
 
 	public void setTargetDate(Date targetDate) {
 		this.targetDate = targetDate;
-	}
-
-	
+	}	
 }

@@ -17,7 +17,6 @@ public class RatesUtil {
 		Map<String, String> rates = new HashMap<>();
 		try {
 			root = mapper.readTree(response.getBody());
-//			String ratesstr = root.get("rates").asText();
 			System.out.println("In rates util.");
 			System.out.println(root.get("rates").get("RON"));
 			rates.put("RON", root.get("rates").get("RON").asText());
