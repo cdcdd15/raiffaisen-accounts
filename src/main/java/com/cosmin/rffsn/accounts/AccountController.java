@@ -72,7 +72,7 @@ public class AccountController {
 		if (account != null) {
 			return new ResponseEntity<String>(
 					"Record with this iban field already exists, change the iban and insert it again",
-					HttpStatus.CREATED);
+					HttpStatus.BAD_REQUEST);
 		}
 		account = repository.save(acc);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(account.getId())
