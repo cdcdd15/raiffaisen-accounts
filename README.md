@@ -11,7 +11,7 @@ Start Docker containers locally
 
 Other comments
 - The commit messages in the history of the Git repo explain what I did step by step
-- Applied circuit breaker library: @CircuitBreaker present in class AccountService.java, I tested it with a call (to the online exchange service) after I stopped the internet connection and the callback method is called (so it works)
+- Applied circuit breaker library: @CircuitBreaker present in class RatesService.java, I tested it with a call (to the online exchange service) after I stopped the internet connection and the callback method is called (so it works)
 - Applied caching: @Cacheable present on method exchageRates() from AccountService.java
 - the search is done by iban column, the find by iban endpoint returns 404 if the record with the corresponding iban is not found
 - iban column is made unique in Account JPA entiy, so from the POST endpoint if you (as a REST client) try to insert accounts with the same iban it will return 400 with the corresponding message
@@ -28,7 +28,7 @@ Production flow (after containers are started and app is running), where [r1] ..
 - get all records [r5]: 200
 - delete all records [r6]: 204
 - get one record by iban [r1]: 404
-*exchange rate map fetched from DB or cache, when the rates are fetched from DB the @Cacheable method (exchageRates() from AccountService.java) is called, when the rates are fetched from cache the @Cacheable method is NOT called, this can be seen in the spring boot (container logs)
+*exchange rate map fetched from DB or cache, when the rates are fetched from DB the @Cacheable method (exchageRates() from AccountService.java) is called, when the rates are fetched from cache the @Cacheable method is NOT called, this can be seen in the spring boot (container logs); also the call fetchig the record from DB takes a longer time
 
 Rest calls (I used Postman)(mentioned in the previous paragraph "Production flow")
 - [r1] GET http://localhost:5000/accounts/62knykn46
