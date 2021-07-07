@@ -46,15 +46,7 @@ public class AccountController {
 
 	@GetMapping("/{iban}")
 	public ResponseEntity<Account> getByIban(@PathVariable String iban) {
-		Account account = this.repository.findByIban(iban);
-		if (account == null)
-			throw new AccountNotFoundException();
-		Double balanceInRon = account.getBalance();
-		Map<String, String> rates = this.serv.exchageRates();
-		Double rate = Double.parseDouble(rates.get("RON"));
-		Double balanceInEur = balanceInRon / rate;
-		account.setBalance(balanceInEur);
-		account.setCurrency("EUR");
+		Account account = this.serv.findByIbanAndModifyBalance(iban);
 		return new ResponseEntity<Account>(account, HttpStatus.OK);
 	}
 
@@ -74,7 +66,7 @@ public class AccountController {
 					"Record with this iban field already exists, change the iban and insert it again",
 					HttpStatus.BAD_REQUEST);
 		}
-		account = repository.save(acc);
+		account = this.serv.save(acc);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(account.getId())
 				.toUri();
 		return new ResponseEntity<String>("Record created, " + uri, HttpStatus.CREATED);
