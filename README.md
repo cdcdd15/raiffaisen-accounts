@@ -50,6 +50,10 @@ Rest calls (I used Postman)(mentioned in the previous paragraph "Production flow
 - [r5] GET http://localhost:5000/accounts
 - [r6] DELETE http://localhost:5000/accounts
 
+Unit testing
+- tests: mock, H2 integration, application (context) loads
+- the most important one is Service layer unit (integration) test (called ServiceTest.java) with a mocked exchange rates bean and an @Autowired repository bean (working with H2 database). This test follows the main flow: inserts one account from the service layer and gets the account (from H2) by iban field with the currency converted to EUR.
+
 External online REST service used
 - service for exchange rates
 https://manage.exchangeratesapi.io/signup/free
