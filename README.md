@@ -27,7 +27,7 @@ Production flow (after containers are started and app is running), where [r1] ..
 - delete all records [r6]: 204
 - get one record by iban [r1]: 404
 - health actuator endpoint (check circuit breaker status) [r7]: 200
-*exchange rate map fetched from DB or cache, when the rates are fetched from DB the @Cacheable method (exchageRates() from AccountService.java) is called, when the rates are fetched from cache the @Cacheable method is NOT called, this can be seen in the spring boot (container logs); also the call fetchig the record from DB takes a longer time
+- *exchange rate map fetched from DB or cache, when the rates are fetched from DB the @Cacheable method (exchageRates() from AccountService.java) is called, when the rates are fetched from cache the @Cacheable method is NOT called, this can be seen in the spring boot (container logs); also the call fetchig the record from DB takes a longer time
 
 Rest calls (I used Postman)(mentioned in the previous paragraph "Production flow")
 - [r1] GET http://localhost:5000/accounts/62knykn46
@@ -74,7 +74,8 @@ Other comments
 - iban column is made unique in Account JPA entiy, so from the POST endpoint if you (as a REST client) try to insert accounts with the same iban it will return 400 with the corresponding message
 
 ### TODO (possible improvements or implementations)
-- DTO mapping (testing)
-- business (service) layer unit testing
-- full code coverage with jacoco plugin
+- full code coverage with Jacoco plugin
+- Spring integration test for @Cacheable
 - clean code with Maven Plugins: checkstyle, pmd, findbugs
+- no entities in Controller layer, use mapstruct plugin for entity - dto conversions
+- Swagger UI for REST endpoints documentation
