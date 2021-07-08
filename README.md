@@ -1,7 +1,7 @@
 ## raiffaisen-accounts (Spring boot project to manage accounts and use exchange rates from external online service)
 
 
-# Build project and start containers
+### Build project and start containers
 
 Package locally with mvn clean package does the following
 - all unit tests are run
@@ -12,7 +12,7 @@ Start Docker containers locally
 - containers start inside --network=spring-mysql-net so they need this Docker network to be created locally
 - the env.sh script (located in scripts folder) does the following: stops deletes all docker containers locally (if the third line is uncommneted it will delete all your images in the local Docker too), creates the project image by running mvn clean package on the current Spring Boot project, creates the Docker network locally, starts the 2 containers mentioned previously (DB and app)
 
-# Production flow
+### Production flow
 
 Production flow (after containers are started and app is running), where [r1] ... [r6] are detailed in the next paragraph
 - get one record by iban [r1]: 404
@@ -48,7 +48,7 @@ Rest calls (I used Postman)(mentioned in the previous paragraph "Production flow
 - [r5] GET http://localhost:5000/accounts
 - [r6] DELETE http://localhost:5000/accounts
 
-# Others
+### Others
 
 Unit testing
 - tests: mock, H2 integration, application (context) loads
@@ -71,7 +71,7 @@ Other comments
 - the search is done by iban column, the find by iban endpoint returns 404 if the record with the corresponding iban is not found
 - iban column is made unique in Account JPA entiy, so from the POST endpoint if you (as a REST client) try to insert accounts with the same iban it will return 400 with the corresponding message
 
-# TODO (possible improvements or implementations)
+### TODO (possible improvements or implementations)
 - DTO mapping (testing)
 - business (service) layer unit testing
 - full code coverage with jacoco plugin
