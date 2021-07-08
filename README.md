@@ -1,4 +1,7 @@
-# raiffaisen-accounts (Spring boot project to manage accounts)
+## raiffaisen-accounts (Spring boot project to manage accounts and use exchange rates from external online service)
+
+
+#Build project and start containers
 
 Package locally with mvn clean package does the following
 - all unit tests are run
@@ -9,12 +12,7 @@ Start Docker containers locally
 - containers start inside --network=spring-mysql-net so they need this Docker network to be created locally
 - the env.sh script (located in scripts folder) does the following: stops deletes all docker containers locally (if the third line is uncommneted it will delete all your images in the local Docker too), creates the project image by running mvn clean package on the current Spring Boot project, creates the Docker network locally, starts the 2 containers mentioned previously (DB and app)
 
-Other comments
-- The commit messages in the history of the Git repo explain what I did step by step
-- Applied circuit breaker library: @CircuitBreaker present in class RatesService.java, I tested it with a call (to the online exchange service) after I stopped the internet connection and the callback method is called (so it works)
-- Applied caching: @Cacheable present on method exchageRates() from AccountService.java
-- the search is done by iban column, the find by iban endpoint returns 404 if the record with the corresponding iban is not found
-- iban column is made unique in Account JPA entiy, so from the POST endpoint if you (as a REST client) try to insert accounts with the same iban it will return 400 with the corresponding message
+#Production flow
 
 Production flow (after containers are started and app is running), where [r1] ... [r6] are detailed in the next paragraph
 - get one record by iban [r1]: 404
@@ -50,6 +48,8 @@ Rest calls (I used Postman)(mentioned in the previous paragraph "Production flow
 - [r5] GET http://localhost:5000/accounts
 - [r6] DELETE http://localhost:5000/accounts
 
+#Others
+
 Unit testing
 - tests: mock, H2 integration, application (context) loads
 - the most important one is Service layer unit (integration) test (called ServiceTest.java) with a mocked exchange rates bean and an @Autowired repository bean (working with H2 database). This test follows the main flow: inserts one account from the service layer and gets the account (from H2) by iban field with the currency converted to EUR.
@@ -64,7 +64,15 @@ https://manage.exchangeratesapi.io/quickstart
 - check api usage of free plan of service for exchange rates
 https://manage.exchangeratesapi.io/usage
 
-TODO
+Other comments
+- The commit messages in the history of the Git repo explain what I did step by step
+- Applied circuit breaker library: @CircuitBreaker present in class RatesService.java, I tested it with a call (to the online exchange service) after I stopped the internet connection and the callback method is called (so it works)
+- Applied caching: @Cacheable present on method exchageRates() from AccountService.java
+- the search is done by iban column, the find by iban endpoint returns 404 if the record with the corresponding iban is not found
+- iban column is made unique in Account JPA entiy, so from the POST endpoint if you (as a REST client) try to insert accounts with the same iban it will return 400 with the corresponding message
+
+#TODO (possible improvements or implementations)
 - DTO mapping (testing)
-- flow integration testing with H2
 - business (service) layer unit testing
+- full code coverage with jacoco plugin
+- clean code with Maven Plugins: checkstyle, pmd, findbugs
