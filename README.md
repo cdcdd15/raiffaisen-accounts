@@ -79,3 +79,4 @@ Other comments
 - clean code with Maven Plugins: checkstyle, pmd, findbugs
 - no entities in Controller layer, use mapstruct plugin for entity - dto conversions
 - Swagger UI for REST endpoints documentation
+- replace Double with BigDecimal for balance and currency amounts in findByIbanAndModifyBalance() class AccountService.java
