@@ -1,4 +1,4 @@
-## raiffaisen-accounts (Spring boot project to manage accounts and use exchange rates from external online service)
+## rffsn-accounts (Spring boot project to manage accounts and use exchange rates from external online service)
 
 
 ### Build project and start containers
