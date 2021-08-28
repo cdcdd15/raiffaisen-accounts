@@ -11,7 +11,7 @@ jobs:
     
     env:
         PIPELINE_VARIABLE: abc
-        IMAGE_NAME: cosdin/rffsn-account-service
+        IMAGE_NAME: 581851189815.dkr.ecr.us-east-2.amazonaws.com/rffsn-github-actions/cosdin/rffsn-account-service
         IMAGE_TAG: 0.0.1-SNAPSHOT
         
     steps:
