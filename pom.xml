@@ -101,7 +101,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>cosdin/${project.name}</repository>
+					<repository>581851189815.dkr.ecr.us-east-2.amazonaws.com/rffsn-github-actions</repository>
+					<!-- <repository>cosdin/${project.name}</repository> -->
 					<tag>${project.version}</tag>
 					<skipDockerInfo>true</skipDockerInfo>
 				</configuration>
