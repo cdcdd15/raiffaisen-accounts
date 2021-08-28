@@ -18,7 +18,8 @@ services:
       - spring-mysql-net
 
   micro-1:
-    image: cosdin/rffsn-account-service:0.0.1-SNAPSHOT
+#    image: cosdin/rffsn-account-service:0.0.1-SNAPSHOT
+    image: 581851189815.dkr.ecr.us-east-2.amazonaws.com/rffsn-github-actions:0.0.1-SNAPSHOT
     container_name: client_node_sb
     ports:
       - 5000:5000
