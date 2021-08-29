@@ -36,8 +36,8 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-#      - name: Build with Maven (includes Docker image build)
-#        run: mvn --batch-mode --update-snapshots verify
+      - name: Build with Maven (includes Docker image build)
+        run: mvn --batch-mode --update-snapshots verify
 
 #       - name: Build with Maven
 #         run: mvn clean package
@@ -45,6 +45,13 @@ jobs:
 #      - name: Build image
 #        run: |
 #            docker build .
+
+      - name: Archive test results
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: test-report
+          path: target/surefire-reports
 
       - name: List images from local Github Docker
         run: |
