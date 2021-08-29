@@ -46,11 +46,11 @@ jobs:
 #        run: |
 #            docker build .
 
-      - name: Archive test results
+      - name: Archive surefire & JaCoCo test reports
         if: always()
         uses: actions/upload-artifact@v1
         with:
-          name: test-report
+          name: test-reports
           path: target/surefire-reports
 
       - name: List images from local Github Docker
